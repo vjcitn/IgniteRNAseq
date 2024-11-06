@@ -17,6 +17,11 @@ RUN Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); BiocMan
     aria2c -x 16 "https://zenodo.org/records/12770737/files/sce_lib10.qs?download=1" && \
     aria2c -x 16 "https://zenodo.org/records/12770737/files/sce_lib90.qs?download=1" && \
     Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); devtools::install('.', dependencies=TRUE, build_vignettes=TRUE, repos = BiocManager::repositories())" && \
-    Rscript -e "basilisk::basiliskRun(env = FLAMES:::flames_env, fun = function(){})"
+    Rscript -e "basilisk::basiliskRun(env = FLAMES:::flames_env, fun = function(){})" && \
+    Rscript -e "library(FLAMES); example(find_isoform); find_isoform( \
+       annotation = annotation, genome_fa = genome_fa,   \
+       genome_bam = file.path(outdir, 'align2genome.bam'),   \
+       outdir = outdir, config = config)"
+     
 
 USER root
